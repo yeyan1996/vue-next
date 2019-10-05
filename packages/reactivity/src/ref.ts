@@ -20,12 +20,14 @@ export function ref(raw: any) {
   }
   raw = convert(raw)
   const v = {
+    // 定义 value 属性作为响应式变量
     [refSymbol]: true,
     get value() {
       track(v, OperationTypes.GET, '')
       return raw
     },
     set value(newVal) {
+      // 如果 newVal 是一个对象就变成响应式对象
       raw = convert(newVal)
       trigger(v, OperationTypes.SET, '')
     }

@@ -161,6 +161,8 @@ export function trigger(
   key?: string | symbol,
   extraInfo?: any
 ) {
+  // 拿到当前响应式对象下面所有的响应式变量保存的所有 deps
+  // 当 target 是 ref 时，depsMap 只有一个元素，且键名为空字符串
   const depsMap = targetMap.get(target)
   if (depsMap === void 0) {
     // never been tracked

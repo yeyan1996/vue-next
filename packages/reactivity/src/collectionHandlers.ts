@@ -221,6 +221,7 @@ function createInstrumentationGetter(instrumentations: any) {
     key: string | symbol,
     receiver: any
   ) {
+    // 如果说 key 在 mutableInstrumentations 列表中（）
     target =
       hasOwn(instrumentations, key) && key in target ? instrumentations : target
     return Reflect.get(target, key, receiver)

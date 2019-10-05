@@ -14,7 +14,10 @@ import { ReactiveEffect } from './effect'
 // which maintains a Set of subscribers, but we simply store them as
 // raw Sets to reduce memory overhead.
 export type Dep = Set<ReactiveEffect>
+// 当前的响应式变量保存的 deps
 export type KeyToDepMap = Map<string | symbol, Dep>
+// 键为响应式对象
+// 也可以是 ref,当是 ref 时 WeakMap 的键名为空字符串
 export const targetMap = new WeakMap<any, KeyToDepMap>()
 
 // WeakMaps that store {raw <-> observed} pairs.
@@ -102,11 +105,16 @@ function createReactiveObject(
   if (!canObserve(target)) {
     return target
   }
+  // 当前对象是否是 Map,WeakMap,Set,WeakSet 的实例
+  // 如果是就对实例的方法做一层拦截（类似 Vue2 对数组的变异方法进行拦截）
+  // 使得它们也是一个响应式对象（Proxy 不支持对它们对拦截？）
   const handlers = collectionTypes.has(target.constructor)
     ? collectionHandlers
     : baseHandlers
   observed = new Proxy(target, handlers)
+  // toProxy 保存着 <源对象，Proxy 对象> 的组合 (源 to Proxy)
   toProxy.set(target, observed)
+  // toRaw 相反
   toRaw.set(observed, target)
   if (!targetMap.has(target)) {
     targetMap.set(target, new Map())
