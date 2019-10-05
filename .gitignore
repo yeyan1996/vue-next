@@ -5,4 +5,5 @@ coverage
 temp
 explorations
 TODOs.md
+.idea
 *.log
