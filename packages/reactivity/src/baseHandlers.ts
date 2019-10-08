@@ -42,7 +42,7 @@ function set(
   const hadKey = hasOwn(target, key)
   const oldValue = target[key]
   if (isRef(oldValue) && !isRef(value)) {
-    // 触发 trigger
+    // 赋值操作会触发 trigger
     oldValue.value = value
     return true
   }
@@ -52,6 +52,8 @@ function set(
     /* istanbul ignore else */
     if (__DEV__) {
       const extraInfo = { oldValue, newValue: value }
+      // 防止出现多次赋值（例如数组的 push 会触发元素的 set 和 length 的 set）
+      // vue 进行了判断，保证只触发一次 trigger
       if (!hadKey) {
         trigger(target, OperationTypes.ADD, key, extraInfo)
       } else if (value !== oldValue) {
