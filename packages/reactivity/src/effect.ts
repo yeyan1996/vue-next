@@ -4,6 +4,9 @@ import { EMPTY_OBJ, extend } from '@vue/shared'
 
 export const effectSymbol = Symbol(__DEV__ ? 'effect' : void 0)
 
+/**
+ * ReactiveEffect 即 Vue2 中的 watcher
+ * */
 export interface ReactiveEffect<T = any> {
   (): T
   [effectSymbol]: true
@@ -41,6 +44,7 @@ export function isEffect(fn: any): fn is ReactiveEffect {
   return fn != null && fn[effectSymbol] === true
 }
 
+// 创建一个 effect，并立即执行（非 lazy 时）
 export function effect<T = any>(
   fn: () => T,
   options: ReactiveEffectOptions = EMPTY_OBJ
@@ -69,6 +73,8 @@ function createReactiveEffect<T = any>(
   fn: () => T,
   options: ReactiveEffectOptions
 ): ReactiveEffect<T> {
+  // 当创建一个 effect 时，非 lazy 情况会立即执行 effect 函数
+  // 给 effect 收集依赖
   const effect = function reactiveEffect(...args: any[]): any {
     return run(effect, fn, args)
   } as ReactiveEffect
@@ -122,11 +128,14 @@ export function resumeTracking() {
 export function track(
   target: any,
   type: OperationTypes,
+  // 响应式对象 target 的某个属性
   key?: string | symbol
 ) {
   if (!shouldTrack) {
     return
   }
+  // 拿到栈顶的 effect 对象
+  // effect 就是 Vue2 中的 watcher
   const effect = activeReactiveEffectStack[activeReactiveEffectStack.length - 1]
   if (effect) {
     if (type === OperationTypes.ITERATE) {
@@ -136,12 +145,16 @@ export function track(
     if (depsMap === void 0) {
       targetMap.set(target, (depsMap = new Map()))
     }
+    // 拿到当前 key 保存的 deps
     let dep = depsMap.get(key!)
     if (dep === void 0) {
       depsMap.set(key!, (dep = new Set()))
     }
     if (!dep.has(effect)) {
+      // 往 dep 也就是 Set 集合中添加一个 effect
       dep.add(effect)
+      // effect 中也添加这个 dep，也就是互相引用
+      // 因为当清除这个 effect 时，需要在所有用到当前 effect 的 dep 中清楚对它的引用
       effect.deps.push(dep)
       if (__DEV__ && effect.onTrack) {
         effect.onTrack({
@@ -155,6 +168,8 @@ export function track(
   }
 }
 
+// 拿到 target 的 key 保存的 dep
+// 触发 dep 中保存的 effect
 export function trigger(
   target: any,
   type: OperationTypes,
@@ -162,7 +177,8 @@ export function trigger(
   extraInfo?: any
 ) {
   // 拿到当前响应式对象下面所有的响应式变量保存的所有 deps
-  // 当 target 是 ref 时，depsMap 只有一个元素，且键名为空字符串
+  // 当 target 是 ref 时，获得的 depsMap 只有一个元素，且键名为空字符串
+  // 拿到当前响应式对象（或者 ref）中所有属性以及各自保存的 deps
   const depsMap = targetMap.get(target)
   if (depsMap === void 0) {
     // never been tracked
@@ -178,15 +194,23 @@ export function trigger(
   } else {
     // schedule runs for SET | ADD | DELETE
     if (key !== void 0) {
-      addRunners(effects, computedRunners, depsMap.get(key))
+      // 根据 effect 的属性（computed effect 或者普通的 effect）
+      // 往 effects 和 computedRunners 添加 effect
+      addRunners(
+        effects,
+        computedRunners,
+        /*触发 trigger 的 key 保存的 deps*/ depsMap.get(key)
+      )
     }
     // also run for iteration key on ADD | DELETE
+    // 当触发 set 的 key 是对象原型链上的属性，会触发 ADD
     if (type === OperationTypes.ADD || type === OperationTypes.DELETE) {
       const iterationKey = Array.isArray(target) ? 'length' : ITERATE_KEY
       addRunners(effects, computedRunners, depsMap.get(iterationKey))
     }
   }
   const run = (effect: ReactiveEffect) => {
+    // 执行 effect 的回调
     scheduleRun(effect, target, type, key, extraInfo)
   }
   // Important: computed effects must be run first so that computed getters

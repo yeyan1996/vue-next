@@ -16,6 +16,7 @@ export const NO = () => false
 
 export const isOn = (key: string) => key[0] === 'o' && key[1] === 'n'
 
+// 将两个对象混合
 export const extend = <T extends object, U extends object>(
   a: T,
   b: U

@@ -21,7 +21,10 @@ function createGetter(isReadonly: boolean) {
     if (isRef(res)) {
       return res.value
     }
+    // 依赖收集
     track(target, OperationTypes.GET, key)
+    // 由于 Proxy 只对最外层对象做代理
+    // 所以当访问深层对象时，需要递归对深层对象进行代理操作（Proxy）
     return isObject(res)
       ? isReadonly
         ? // need to lazy access readonly and reactive here to avoid
@@ -42,7 +45,7 @@ function set(
   const hadKey = hasOwn(target, key)
   const oldValue = target[key]
   if (isRef(oldValue) && !isRef(value)) {
-    // 赋值操作会触发 trigger
+    // 对 ref 的赋值操作会触发 trigger
     oldValue.value = value
     return true
   }
@@ -52,11 +55,13 @@ function set(
     /* istanbul ignore else */
     if (__DEV__) {
       const extraInfo = { oldValue, newValue: value }
-      // 防止出现多次赋值（例如数组的 push 会触发元素的 set 和 length 的 set）
+      // 防止出现多次赋值（例如数组的 push 会触发元素下标的 set 和 length 的 set）
       // vue 进行了判断，保证只触发一次 trigger
+      // 当前 key 在原型链上
       if (!hadKey) {
         trigger(target, OperationTypes.ADD, key, extraInfo)
       } else if (value !== oldValue) {
+        // 当前 key 是当前对象的属性（非原型链）
         trigger(target, OperationTypes.SET, key, extraInfo)
       }
     } else {

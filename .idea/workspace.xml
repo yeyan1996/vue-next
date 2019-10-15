@@ -2,20 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eab5c1d1-dd74-47da-8b7e-4e8301feda3d" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/007.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vue-next.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/reactivity/__tests__/reactive.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/reactivity/__tests__/reactive.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/reactivity/src/baseHandlers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/reactivity/src/baseHandlers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/reactivity/src/collectionHandlers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/reactivity/src/collectionHandlers.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/reactivity/src/effect.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/reactivity/src/effect.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/reactivity/src/reactive.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/reactivity/src/reactive.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/reactivity/src/ref.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/reactivity/src/ref.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/shared/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/packages/shared/src/index.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,28 +21,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/packages/reactivity/src/index.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/packages/reactivity/src/reactive.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1071">
-              <caret line="66" column="21" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="21" />
+            <state relative-caret-position="543">
+              <caret line="45" column="9" lean-forward="true" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
               <folding>
                 <element signature="e#0#52#0" expanded="true" />
               </folding>
@@ -58,11 +32,47 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/packages/reactivity/src/ref.ts">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packages/reactivity/__tests__/effect.spec.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
-              <caret line="85" selection-start-line="85" selection-end-line="85" />
+            <state relative-caret-position="168">
+              <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#122#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/packages/reactivity/src/effect.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="499">
+              <caret line="96" column="31" selection-start-line="96" selection-start-column="6" selection-end-line="96" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#45#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packages/reactivity/src/baseHandlers.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="24" column="6" lean-forward="true" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
+              <folding>
+                <element signature="e#0#54#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packages/shared/src/index.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -75,8 +85,19 @@
       <find>instrumentations</find>
       <find>args</find>
       <find>depsMap</find>
-      <find>targetMap</find>
       <find>effects</find>
+      <find>has</find>
+      <find>collectionTypes</find>
+      <find>WeakMap</find>
+      <find>toRaw</find>
+      <find>LOCKED</find>
+      <find>targetMap</find>
+      <find>ReactiveEffect</find>
+      <find>hadKey</find>
+      <find>ITERATE_KEY</find>
+      <find>run</find>
+      <find>lazy</find>
+      <find>active</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -86,11 +107,12 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/packages/reactivity/src/collectionHandlers.ts" />
-        <option value="$PROJECT_DIR$/packages/shared/src/index.ts" />
-        <option value="$PROJECT_DIR$/packages/reactivity/src/baseHandlers.ts" />
-        <option value="$PROJECT_DIR$/packages/reactivity/src/effect.ts" />
         <option value="$PROJECT_DIR$/packages/reactivity/src/ref.ts" />
+        <option value="$PROJECT_DIR$/packages/reactivity/__tests__/reactive.spec.ts" />
         <option value="$PROJECT_DIR$/packages/reactivity/src/reactive.ts" />
+        <option value="$PROJECT_DIR$/packages/reactivity/src/baseHandlers.ts" />
+        <option value="$PROJECT_DIR$/packages/shared/src/index.ts" />
+        <option value="$PROJECT_DIR$/packages/reactivity/src/effect.ts" />
       </list>
     </option>
   </component>
@@ -129,8 +151,36 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="vue-next" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vue-next" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vue-next" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vue-next" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vue-next" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vue-next" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+              <item name="reactivity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="vue-next" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vue-next" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
+              <item name="reactivity" type="462c0819:PsiDirectoryNode" />
+              <item name="__tests__" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -151,7 +201,8 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RunDashboard">
@@ -167,6 +218,20 @@
     </option>
   </component>
   <component name="RunManager" selected="npm.test">
+    <configuration name="reactivity/reactive.Object" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$/packages/reactivity" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/packages/reactivity/__tests__/reactive.spec.ts" />
+      <test-names>
+        <test-name value="reactivity/reactive" />
+        <test-name value="Object" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="reactivity/ref.should work like a normal property when nested in a reactive object" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -203,12 +268,14 @@
     </configuration>
     <list>
       <item itemvalue="Jest.reactivity/ref.should work like a normal property when nested in a reactive object" />
+      <item itemvalue="Jest.reactivity/reactive.Object" />
       <item itemvalue="npm.dev" />
       <item itemvalue="npm.test" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="npm.test" />
+        <item itemvalue="Jest.reactivity/reactive.Object" />
         <item itemvalue="Jest.reactivity/ref.should work like a normal property when nested in a reactive object" />
       </list>
     </recent_temporary>
@@ -225,6 +292,7 @@
       <updated>1570248111778</updated>
       <workItem from="1570248113141" duration="3470000" />
       <workItem from="1570251770303" duration="8294000" />
+      <workItem from="1571107448739" duration="2749000" />
     </task>
     <servers />
   </component>
@@ -238,30 +306,46 @@
     <history-entry file="reactivity_ref_should_work_like_a_normal_property_when_nested_in_a_reactive_object - 2019.10.05 at 12h 41m 35s.xml">
       <configuration name="reactivity/ref.should work like a normal property when nested in a reactive object" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
+    <history-entry file="reactivity_reactive_Object - 2019.10.14 at 22h 58m 22s.xml">
+      <configuration name="reactivity/reactive.Object" configurationId="JavaScriptTestRunnerJest" />
+    </history-entry>
+    <history-entry file="reactivity_reactive_Object - 2019.10.14 at 22h 58m 25s.xml">
+      <configuration name="reactivity/reactive.Object" configurationId="JavaScriptTestRunnerJest" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12020000" />
+    <option name="totallyTimeSpent" value="21874000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.1929182" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1953602" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info id="调试" order="4" weight="0.43345544" />
+      <window_info id="调试" order="4" weight="0.3998779" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.34285715" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32959184" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32959184" />
-      <window_info anchor="bottom" id="TypeScript" order="9" />
+      <window_info anchor="bottom" id="TypeScript" order="9" weight="0.32959184" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.22857143" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.113265306" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -278,6 +362,11 @@
           <url>file://$PROJECT_DIR$/packages/reactivity/__tests__/ref.spec.ts</url>
           <line>59</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/packages/reactivity/__tests__/reactive.spec.ts</url>
+          <line>29</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -363,47 +452,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packages/reactivity/src/reactive.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="66" column="21" selection-start-line="66" selection-start-column="21" selection-end-line="66" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/shared/src/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="14" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/reactivity/src/effect.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="187" selection-start-line="187" selection-end-line="187" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packages/reactivity/src/ref.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="508">
           <caret line="85" selection-start-line="85" selection-end-line="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packages/reactivity/src/baseHandlers.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#54#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -413,6 +465,98 @@
           <caret line="48" column="20" lean-forward="true" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="20" />
           <folding>
             <element signature="e#0#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/runtime-core/src/componentProps.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="507">
+          <caret line="123" column="2" selection-start-line="123" selection-start-column="2" selection-end-line="123" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/reactivity/src/lock.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="27" lean-forward="true" selection-start-column="27" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.es2015.collection.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="58" column="4" selection-start-line="58" selection-start-column="4" selection-end-line="58" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.es5.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="1463" column="5" selection-start-line="1463" selection-start-column="5" selection-end-line="1463" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.es2015.core.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="285" column="4" selection-start-line="285" selection-start-column="4" selection-end-line="285" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/shared/src/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/reactivity/__tests__/reactive.spec.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/reactivity/src/baseHandlers.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="6" lean-forward="true" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/reactivity/src/reactive.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="45" column="9" lean-forward="true" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/reactivity/__tests__/effect.spec.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#122#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packages/reactivity/src/effect.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="499">
+          <caret line="96" column="31" selection-start-line="96" selection-start-column="6" selection-end-line="96" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
           </folding>
         </state>
       </provider>

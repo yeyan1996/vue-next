@@ -127,6 +127,7 @@ describe('reactivity/reactive', () => {
     expect(toRaw(original)).toBe(original)
   })
 
+  // 不会去包裹 ref（ref 已经是响应式）
   test('should not unwrap Ref<T>', () => {
     const observedNumberRef = reactive(ref(1))
     const observedObjectRef = reactive(ref({ foo: 1 }))

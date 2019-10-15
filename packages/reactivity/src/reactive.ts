@@ -13,11 +13,14 @@ import { ReactiveEffect } from './effect'
 // Conceptually, it's easier to think of a dependency as a Dep class
 // which maintains a Set of subscribers, but we simply store them as
 // raw Sets to reduce memory overhead.
+// Vue3 中 Dep 被定义为 effect 的集合
 export type Dep = Set<ReactiveEffect>
-// 当前的响应式变量保存的 deps
+// 键是响应式对象的 key
+// 值是 key 保存的 deps 数组
 export type KeyToDepMap = Map<string | symbol, Dep>
 // 键为响应式对象
-// 也可以是 ref,当是 ref 时 WeakMap 的键名为空字符串
+// 键也可以是 ref
+// 当键是 ref 时， KeyToDepMap 只有一个元素，且它键为空字符串
 export const targetMap = new WeakMap<any, KeyToDepMap>()
 
 // WeakMaps that store {raw <-> observed} pairs.
@@ -31,7 +34,17 @@ const readonlyToRaw = new WeakMap<any, any>()
 const readonlyValues = new WeakSet<any>()
 const nonReactiveValues = new WeakSet<any>()
 
-const collectionTypes = new Set<Function>([Set, Map, WeakMap, WeakSet])
+export type CollectionConstructor =
+  | SetConstructor
+  | MapConstructor
+  | WeakMapConstructor
+  | WeakSetConstructor
+const collectionTypes = new Set<CollectionConstructor>([
+  Set,
+  Map,
+  WeakMap,
+  WeakSet
+])
 const observableValueRE = /^\[object (?:Object|Array|Map|Set|WeakMap|WeakSet)\]$/
 
 const canObserve = (value: any): boolean => {
@@ -61,7 +74,8 @@ export function reactive(target: object) {
     mutableCollectionHandlers
   )
 }
-
+// 将当前对象变成一个只读的对象
+// 原理是代理 set
 export function readonly<T extends object>(
   target: T
 ): Readonly<UnwrapNestedRefs<T>> {
@@ -79,6 +93,7 @@ export function readonly<T extends object>(
   )
 }
 
+// 根据传入的 handler 参数代理对象
 function createReactiveObject(
   target: any,
   toProxy: WeakMap<any, any>,
@@ -108,9 +123,12 @@ function createReactiveObject(
   // 当前对象是否是 Map,WeakMap,Set,WeakSet 的实例
   // 如果是就对实例的方法做一层拦截（类似 Vue2 对数组的变异方法进行拦截）
   // 使得它们也是一个响应式对象（Proxy 不支持对它们对拦截？）
-  const handlers = collectionTypes.has(target.constructor)
+  const handlers = collectionTypes.has(
+    target.constructor as CollectionConstructor
+  )
     ? collectionHandlers
     : baseHandlers
+  // 新建一个响应式对象
   observed = new Proxy(target, handlers)
   // toProxy 保存着 <源对象，Proxy 对象> 的组合 (源 to Proxy)
   toProxy.set(target, observed)
