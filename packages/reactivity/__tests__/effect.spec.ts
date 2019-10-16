@@ -10,12 +10,19 @@ import {
 import { ITERATE_KEY } from '../src/effect'
 
 describe('reactivity/effect', () => {
+  // effect 包裹的函数会立即执行一次
   it('should run the passed function once (wrapped by a effect)', () => {
     const fnSpy = jest.fn(() => {})
     effect(fnSpy)
     expect(fnSpy).toHaveBeenCalledTimes(1)
   })
 
+  // 在 effect 包裹函数执行前，将当前 effect 推入 activeReactiveEffectStack
+  // 在包裹函数执行时，遇到响应式变量（key）会触发 getter(createGetter)
+  // 给当前的 key 的 dep 添加栈顶的 effect
+  // 当触发响应式变量 (counter.num) 的 setter 时
+  // 会从 depsMap 拿到 响应式变量 (counter.num) 对应的 dep
+  // 触发 dep 中所有的 effect（run）
   it('should observe basic properties', () => {
     let dummy
     const counter = reactive({ num: 0 })
@@ -26,10 +33,14 @@ describe('reactivity/effect', () => {
     expect(dummy).toBe(7)
   })
 
+  // 当 counter.num1 触发 setter 时，会触发 num1 对应的 dep 中的所有 effect
+  // counter.num2 同理
   it('should observe multiple properties', () => {
     let dummy
     const counter = reactive({ num1: 0, num2: 0 })
-    effect(() => (dummy = counter.num1 + counter.num1 + counter.num2))
+    effect(() => {
+      dummy = counter.num1 + counter.num1 + counter.num2
+    })
 
     expect(dummy).toBe(0)
     counter.num1 = counter.num2 = 7
@@ -49,6 +60,11 @@ describe('reactivity/effect', () => {
     expect(dummy2).toBe(1)
   })
 
+  // 最终无论多深，都会递归的进行代理
+  // 在给深层对象的属性赋值时，会先触发父级对象的 getter 再触发属性的 setter
+  // 这里即先触发 nested 的 getter，再触发 num 的 setter
+  // 当触发父级对象的 getter 时，会查找保存所有代理对象的 Map(rawToReactive)
+  // 若 Map 中没有代理过，就给父级对象做代理
   it('should observe nested properties', () => {
     let dummy
     const counter = reactive({ nested: { num: 0 } })
@@ -59,6 +75,8 @@ describe('reactivity/effect', () => {
     expect(dummy).toBe(8)
   })
 
+  // 由于 Proxy 可以拦截对象 delete 属性的操作
+  // 和赋值一样会执行 run，触发删除的属性对应的 dep 中的所有 effect
   it('should observe delete operations', () => {
     let dummy
     const obj = reactive({ prop: 'value' })
@@ -69,10 +87,15 @@ describe('reactivity/effect', () => {
     expect(dummy).toBe(undefined)
   })
 
+  // Vue3 先会删除属性，再触发 dep（set,get,has 同理）
+  // 也就说先删除属性，再执行 effect 中的函数
+  // 同时基于 Proxy 的响应式可以监听对象根属性的添加
   it('should observe has operations', () => {
     let dummy
     const obj = reactive<{ prop: string | number }>({ prop: 'value' })
-    effect(() => (dummy = 'prop' in obj))
+    effect(() => {
+      dummy = 'prop' in obj
+    })
 
     expect(dummy).toBe(true)
     delete obj.prop
@@ -80,7 +103,10 @@ describe('reactivity/effect', () => {
     obj.prop = 12
     expect(dummy).toBe(true)
   })
-
+  // 当在对象的原型链上存在同名的变量时, 删除在对象的那个属性
+  // 会触发 deleteProperty 重新执行 effect 中的函数并重新收集依赖
+  // 第一次收集的是 { num: 0 } ，而删除 num 后，再次收集到的则是 { num: 2 }
+  // 所以当 { num: 2 } 被修改时，也会触发 effect 中的函数
   it('should observe properties on the prototype chain', () => {
     let dummy
     const counter = reactive({ num: 0 })
@@ -97,6 +123,7 @@ describe('reactivity/effect', () => {
     expect(dummy).toBe(3)
   })
 
+  // 同上
   it('should observe has operations on the prototype chain', () => {
     let dummy
     const counter = reactive({ num: 0 })
@@ -125,6 +152,9 @@ describe('reactivity/effect', () => {
       }
     })
     Object.setPrototypeOf(obj, parent)
+    // 虽然 obj 中没有 prop
+    // 但是会触发 obj 的 get，给 obj 的 depsMap 注册一个 prop 属性
+    // 对应的 dep 添加当前的 effect
     effect(() => (dummy = obj.prop))
     effect(() => (parentDummy = parent.prop))
 
@@ -135,6 +165,7 @@ describe('reactivity/effect', () => {
     // this doesn't work, should it?
     // expect(parentDummy).toBe(4)
     parent.prop = 2
+    // 为什么 dummy 会等于 2 而不是 4？
     expect(dummy).toBe(2)
     expect(parentDummy).toBe(2)
   })

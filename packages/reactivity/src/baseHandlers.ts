@@ -75,9 +75,13 @@ function set(
   return result
 }
 
+// 拦截对象的删除操作 delete
 function deleteProperty(target: any, key: string | symbol): boolean {
   const hadKey = hasOwn(target, key)
   const oldValue = target[key]
+  /**在执行完 Reflect 的方法后，对象上就已经没有这个属性了
+   * 也就是说，先删除属性在触发 dep
+   * */
   const result = Reflect.deleteProperty(target, key)
   if (result && hadKey) {
     /* istanbul ignore else */

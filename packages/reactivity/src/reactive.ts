@@ -24,7 +24,7 @@ export type KeyToDepMap = Map<string | symbol, Dep>
 export const targetMap = new WeakMap<any, KeyToDepMap>()
 
 // WeakMaps that store {raw <-> observed} pairs.
-const rawToReactive = new WeakMap<any, any>()
+const rawToReactive = new WeakMap<any, any>() // 保存所有代理过的对象，避免多余的代理逻辑
 const reactiveToRaw = new WeakMap<any, any>()
 const rawToReadonly = new WeakMap<any, any>()
 const readonlyToRaw = new WeakMap<any, any>()
@@ -108,11 +108,13 @@ function createReactiveObject(
     return target
   }
   // target already has corresponding Proxy
+  // target 之前被代理过，直接返回缓存中的值
   let observed = toProxy.get(target)
   if (observed !== void 0) {
     return observed
   }
   // target is already a Proxy
+  // target 已经是一个 Proxy 直接返回
   if (toRaw.has(target)) {
     return target
   }
@@ -134,6 +136,10 @@ function createReactiveObject(
   toProxy.set(target, observed)
   // toRaw 相反
   toRaw.set(observed, target)
+  /**给
+   *  targetMap 注册当前响应式对象
+   *  也就是说一旦对象说一个响应式对象，targetMap 就会有对应的记录，但是值说一个空的 Map
+   *  */
   if (!targetMap.has(target)) {
     targetMap.set(target, new Map())
   }

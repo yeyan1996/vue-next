@@ -73,8 +73,7 @@ function createReactiveEffect<T = any>(
   fn: () => T,
   options: ReactiveEffectOptions
 ): ReactiveEffect<T> {
-  // 当创建一个 effect 时，非 lazy 情况会立即执行 effect 函数
-  // 给 effect 收集依赖
+  // effect 基于传入的参数 fn，同时添加了一些额外属性
   const effect = function reactiveEffect(...args: any[]): any {
     return run(effect, fn, args)
   } as ReactiveEffect
@@ -97,6 +96,8 @@ function run(effect: ReactiveEffect, fn: Function, args: any[]): any {
   if (activeReactiveEffectStack.indexOf(effect) === -1) {
     cleanup(effect)
     try {
+      // 将当前 effect 推入栈顶（Vue2 中的全局栈）
+      // 以便在执行 fn 的时候给 fn 中的响应式变量收集当前的 effect 作为依赖
       activeReactiveEffectStack.push(effect)
       return fn(...args)
     } finally {
@@ -125,6 +126,7 @@ export function resumeTracking() {
   shouldTrack = true
 }
 
+// 依赖收集
 export function track(
   target: any,
   type: OperationTypes,
@@ -145,7 +147,7 @@ export function track(
     if (depsMap === void 0) {
       targetMap.set(target, (depsMap = new Map()))
     }
-    // 拿到当前 key 保存的 deps
+    // 拿到当前 key 保存的 dep
     let dep = depsMap.get(key!)
     if (dep === void 0) {
       depsMap.set(key!, (dep = new Set()))
@@ -176,7 +178,7 @@ export function trigger(
   key?: string | symbol,
   extraInfo?: any
 ) {
-  // 拿到当前响应式对象下面所有的响应式变量保存的所有 deps
+  // 拿到当前响应式对象下面所有的响应式变量和它保存（对应）的 dep
   // 当 target 是 ref 时，获得的 depsMap 只有一个元素，且键名为空字符串
   // 拿到当前响应式对象（或者 ref）中所有属性以及各自保存的 deps
   const depsMap = targetMap.get(target)
@@ -194,12 +196,12 @@ export function trigger(
   } else {
     // schedule runs for SET | ADD | DELETE
     if (key !== void 0) {
-      // 根据 effect 的属性（computed effect 或者普通的 effect）
+      // 根据 effect  的属性（computed effect 或者普通的 effect）
       // 往 effects 和 computedRunners 添加 effect
       addRunners(
         effects,
         computedRunners,
-        /*触发 trigger 的 key 保存的 deps*/ depsMap.get(key)
+        /*触发 trigger 的 key 保存的 dep*/ depsMap.get(key)
       )
     }
     // also run for iteration key on ADD | DELETE
@@ -215,10 +217,12 @@ export function trigger(
   }
   // Important: computed effects must be run first so that computed getters
   // can be invalidated before any normal effects that depend on them are run.
+  // 分别执行 computed effects 和 普通 effects
   computedRunners.forEach(run)
   effects.forEach(run)
 }
 
+// 将 dep 中的 effect 根据属性，分别放到 effects 和 computedRunners 中
 function addRunners(
   effects: Set<ReactiveEffect>,
   computedRunners: Set<ReactiveEffect>,
