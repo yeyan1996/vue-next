@@ -20,6 +20,7 @@ describe('reactivity/effect', () => {
   // 在 effect 包裹函数执行前，将当前 effect 推入 activeReactiveEffectStack
   // 在包裹函数执行时，遇到响应式变量（key）会触发 getter(createGetter)
   // 给当前的 key 的 dep 添加栈顶的 effect
+
   // 当触发响应式变量 (counter.num) 的 setter 时
   // 会从 depsMap 拿到 响应式变量 (counter.num) 对应的 dep
   // 触发 dep 中所有的 effect（run）
@@ -153,23 +154,33 @@ describe('reactivity/effect', () => {
     })
     Object.setPrototypeOf(obj, parent)
     // 虽然 obj 中没有 prop
-    // 但是会触发 obj 的 get，给 obj 的 depsMap 注册一个 prop 属性
-    // 对应的 dep 添加当前的 effect
-    effect(() => (dummy = obj.prop))
-    effect(() => (parentDummy = parent.prop))
+    // 但是会触发 obj 的 get，给 obj 对应的 depsMap 注册一个 prop 属性
+    // prop 属性对应的 dep 添加当前的 effect
+
+    // 同时由于 obj 中没有 prop
+    // 但是内部触发了 Reflect.get ，访问到了原型链上的 prop 属性
+    // 最终会还会给原型链上的 prop 添加当前 effect
+    effect(() => (dummy = obj.prop)) // obj.prop 和 parent.prop (obj.__proto__.prop) 都会保存这个 effect
+    effect(() => (parentDummy = parent.prop)) // 只有一个 parent.prop (obj.__proto.prop) 保存这个 effect
 
     expect(dummy).toBe(undefined)
     expect(parentDummy).toBe(undefined)
+    // 以下操作会触发原型链上的 prop 的 setter，并不会给 obj.prop 赋值
+    // 然后由于 Vue 的一些操作（第一个 effect 的第一段），使得第一个 effect 也会触发
     obj.prop = 4
     expect(dummy).toBe(4)
     // this doesn't work, should it?
     // expect(parentDummy).toBe(4)
     parent.prop = 2
-    // 为什么 dummy 会等于 2 而不是 4？
     expect(dummy).toBe(2)
     expect(parentDummy).toBe(2)
+    // 由于在原型链上有 prop 的 setter
+    // 所以即使全部执行完，obj 仍没有 prop 属性
   })
 
+  // 由于在执行 effect 的时候已经将栈顶的元素设置为当前的 effect
+  // 所以在 effect 包裹的函数执行时，所有响应式变量触发的 getter 都会添加当前的 effect
+  // 同时在函数执行完毕后，会弹出当前 effect
   it('should observe function call chains', () => {
     let dummy
     const counter = reactive({ num: 0 })

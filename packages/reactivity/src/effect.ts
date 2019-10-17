@@ -143,6 +143,8 @@ export function track(
     if (type === OperationTypes.ITERATE) {
       key = ITERATE_KEY
     }
+    // 当对象被 reactive 方法包裹时（或者 ref）
+    // targetMap 中会添加一个元素，键为当前对象，值为空的 Map
     let depsMap = targetMap.get(target)
     if (depsMap === void 0) {
       targetMap.set(target, (depsMap = new Map()))
@@ -205,7 +207,7 @@ export function trigger(
       )
     }
     // also run for iteration key on ADD | DELETE
-    // 当触发 set 的 key 是对象原型链上的属性，会触发 ADD
+    // 当触发 set 的 key 不存在，或者是对象原型链上的属性，会触发 ADD
     if (type === OperationTypes.ADD || type === OperationTypes.DELETE) {
       const iterationKey = Array.isArray(target) ? 'length' : ITERATE_KEY
       addRunners(effects, computedRunners, depsMap.get(iterationKey))

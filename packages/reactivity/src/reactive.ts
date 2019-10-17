@@ -138,7 +138,7 @@ function createReactiveObject(
   toRaw.set(observed, target)
   /**给
    *  targetMap 注册当前响应式对象
-   *  也就是说一旦对象说一个响应式对象，targetMap 就会有对应的记录，但是值说一个空的 Map
+   *  也就是说一旦对象是一个响应式对象，targetMap 就会有对应的记录，但是值是一个空的 Map
    *  */
   if (!targetMap.has(target)) {
     targetMap.set(target, new Map())

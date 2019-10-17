@@ -14,6 +14,10 @@ const builtInSymbols = new Set(
 function createGetter(isReadonly: boolean) {
   // Vue2 中的 getter，收集依赖
   return function get(target: any, key: string | symbol, receiver: any) {
+    /**
+     * 如果 get 的属性只存在于原型链
+     * Reflect.get 会直接访问原型链，并额外先触发一次原型链上对应属性的 getter
+     * */
     const res = Reflect.get(target, key, receiver)
     if (isSymbol(key) && builtInSymbols.has(key)) {
       return res
@@ -51,6 +55,8 @@ function set(
   }
   const result = Reflect.set(target, key, value, receiver)
   // don't trigger if target is something up in the prototype chain of original
+  // 当触发的是原型链上某个属性的 setter（由 Reflect.set 触发）
+  // target 为原型链上的对象，和 receiver 不想等，所以返回 false
   if (target === toRaw(receiver)) {
     /* istanbul ignore else */
     if (__DEV__) {
